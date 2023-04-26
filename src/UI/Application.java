@@ -4,6 +4,8 @@ package UI;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import DAO.ProizvodDAO;
+import DatabaseDAO.DatabaseProizvodDAO;
 import Util.Meni;
 import Util.Meni.FunkcionalnaStavkaMenija;
 import Util.Meni.IzlaznaStavkaMenija;
@@ -19,6 +21,9 @@ public class Application {
 					"root", 
 					"root");
 			
+			ProizvodDAO proizvodDAO = new DatabaseProizvodDAO(conn);
+			
+			ProizvodUI.setProizvodDAO(proizvodDAO);
 			
 		}
 		
@@ -34,27 +39,27 @@ public class Application {
 		}
 
 		public static void main(String[] args) throws Exception {
-			Meni.pokreni("", new StavkaMenija[] {
+			Meni.pokreni("Porudzbine", new StavkaMenija[] {
 				new IzlaznaStavkaMenija("Izlaz"),
-				new FunkcionalnaStavkaMenija("") {
+				new FunkcionalnaStavkaMenija("Prikaz svih proizvoda") {
+
+					@Override
+					public void izvrsi() { ProizvodUI.prikazSvihProizvoda(); }
+					
+				}, 
+				new FunkcionalnaStavkaMenija("Prikaz svih porudzbina") {
 
 					@Override
 					public void izvrsi() {  }
 					
 				}, 
-				new FunkcionalnaStavkaMenija("") {
-
-					@Override
-					public void izvrsi() {  }
-					
-				}, 
-				new FunkcionalnaStavkaMenija("") {
+				new FunkcionalnaStavkaMenija("Dodavanje porudzbine") {
 
 					@Override
 					public void izvrsi() {  }
 					
 				},
-				new FunkcionalnaStavkaMenija("") {
+				new FunkcionalnaStavkaMenija("Izvestaj") {
 
 					@Override
 					public void izvrsi() {  }
