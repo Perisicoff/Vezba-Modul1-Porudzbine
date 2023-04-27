@@ -7,20 +7,20 @@ import java.util.Objects;
 import java.util.Set;
 
 public class Proizvod {
-	
+
 	private long id;
 	private long sifra;
 	private String naziv = "";
-	private long cena;
+	private double cena;
 	private boolean besplatnaDostava;
-	
+
 	private final Set<Porudzbina> porudzbine = new HashSet<>();
 
 	public Proizvod() {
 		super();
 	}
 
-	public Proizvod(long sifra, String naziv, long cena, boolean besplatnaDostava) {
+	public Proizvod(long sifra, String naziv, double cena, boolean besplatnaDostava) {
 		super();
 		this.sifra = sifra;
 		this.naziv = naziv;
@@ -28,7 +28,7 @@ public class Proizvod {
 		this.besplatnaDostava = besplatnaDostava;
 	}
 
-	public Proizvod(long id, long sifra, String naziv, long cena, boolean besplatnaDostava) {
+	public Proizvod(long id, long sifra, String naziv, double cena, boolean besplatnaDostava) {
 		super();
 		this.id = id;
 		this.sifra = sifra;
@@ -80,11 +80,11 @@ public class Proizvod {
 		this.naziv = naziv;
 	}
 
-	public long getCena() {
+	public double getCena() {
 		return cena;
 	}
 
-	public void setCena(long cena) {
+	public void setCena(double cena) {
 		this.cena = cena;
 	}
 
@@ -99,7 +99,31 @@ public class Proizvod {
 	public Collection<Porudzbina> getPorudzbine() {
 		return Collections.unmodifiableCollection(porudzbine);
 	}
-	
-	
+
+	public void addPorudzbinu(Porudzbina porudzbina) {
+		this.porudzbine.add(porudzbina);
+		porudzbina.setProizvod(this);
+
+	}
+
+	public void addAllPorudzbine(Collection<Porudzbina> porudzbine) {
+		this.porudzbine.addAll(porudzbine);
+		for (Porudzbina porudzbina : porudzbine) {
+			porudzbina.setProizvod(this);
+		}
+
+	}
+
+	public void removePorudzbiu(Porudzbina porudzbina) {
+		porudzbina.setProizvod(null);
+		porudzbine.remove(porudzbina);
+	}
+
+	public void removeAllPorudzbine() {
+		for (Porudzbina porudzbina : porudzbine) {
+			porudzbina.setProizvod(null);
+		}
+		this.porudzbine.clear();
+	}
 
 }
